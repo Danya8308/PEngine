@@ -2,7 +2,7 @@
 from Components.Color import *
 from Components.Component import *
 #
-from pygame import *
+
 
 #Поля для работы с геометрией:
 class Geometry:

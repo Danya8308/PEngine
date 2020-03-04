@@ -10,4 +10,4 @@ class CTexture(Component):
 
     
     def Create(self):
-        self.type.Create(self.surface, self.object)
+        self.type.Draw(self.surface, self.object)

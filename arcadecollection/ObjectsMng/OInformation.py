@@ -1,4 +1,7 @@
 from ObjectsMng.Vector import *
+#
+from pygame import *
+
 
 #Массив всех созданных объектов
 OArray = []

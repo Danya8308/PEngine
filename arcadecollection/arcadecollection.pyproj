@@ -34,9 +34,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Components\Component.py" />
-    <Compile Include="Components\Texture\CSquare.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Components\Texture\CircleTexture.py" />
+    <Compile Include="Components\Texture\CTexture.py" />
+    <Compile Include="Components\Texture\SquareTexture.py" />
     <Compile Include="Games\GSnake\Snake.py" />
     <Compile Include="Games\GSnake\SnakeManager.py" />
     <Compile Include="Inputs\Input.py" />
@@ -50,11 +50,8 @@
     <Compile Include="ObjectsMng\Vector.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Components\Texture\CCircle.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Windows\MainMenu.py" />
-    <Compile Include="Windows\Window.py" />
+    <Compile Include="Scene\MainMenu.py" />
+    <Compile Include="Scene\Window.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Components\" />
@@ -65,7 +62,7 @@
     <Folder Include="Inputs\" />
     <Folder Include="Interface\" />
     <Folder Include="ObjectsMng\" />
-    <Folder Include="Windows\" />
+    <Folder Include="Scene\" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.8" />

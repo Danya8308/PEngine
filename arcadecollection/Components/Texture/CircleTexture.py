@@ -8,7 +8,5 @@ class CircleTexture:
 
 
     #Создаем круг
-    def Create(self, surface, obj):
-        draw.circle(surface, self.color, (obj.geom.position.x, obj.geom.position.y), self.radius)
-
-    
+    def Draw(self, surface, obj):
+        draw.circle(surface, obj.color, (obj.geom.position.x, obj.geom.position.y), self.radius)

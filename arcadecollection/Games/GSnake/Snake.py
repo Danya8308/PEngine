@@ -2,16 +2,21 @@ from Components.Collider.CircleCollider import *
 from Components.Texture.CircleTexture import *
 from ObjectsMng.Object import *
 from Inputs.SnakeCntrl import *
-from Windows.Window import *
+from Scene.Window import *
 #
 from copy import *
 
 
 class Tail(Object):
 
-    def set_geom(self, geom, radius, coll = True):
-        self.geom = geom 
-        self.geom.radius = radius
+    def set_geom(self, head, prev_geom, coll = True):
+        
+        #Компоненты:
+        self.coll = self.AddComponent(CCollider(self, CircleCollider(head.radiusTail)))
+        self.paint = self.AddComponent(CTexture(head.surface, self, CircleTexture(head.radiusTail)))
+
+        #
+        self.geom = prev_geom
         self.coll.collision = coll
         
 
@@ -37,14 +42,10 @@ class Snake(Object):
     #Диспетчер змеи
     def set_snake(self, surface, position):
         #Определяем экран
-        self.surface = surface    
+        self.surface = surface
 
         #Стартуем в позиции:
         self.start_atPoint(position)
-
-        #Компоненты:
-        self.coll = AddComponent(CCollider(self, CircleCollider()))
-        self.form = AddComponent(CTexture(surface, self, CircleTexture()))
 
         #
         self.coll.collision = True
@@ -60,11 +61,11 @@ class Snake(Object):
             if len(self.arr_tail) < self.length_snake:
 
                 self.arr_tail.append(Tail())
-                self.arr_tail[len(self.arr_tail) - 1].set_geom(deepcopy(self.Prev), self.radiusTail)
+                self.arr_tail[len(self.arr_tail) - 1].set_geom(self, deepcopy(self.Prev))
                 #
 
                 for i in self.arr_tail:
-                    i.Create(self.surface)
+                    i.paint.Create()
             else:
                 for i in range(len(self.arr_tail)):
 
@@ -75,10 +76,9 @@ class Snake(Object):
                     #
                     #
                         self.arr_tail[i].geom = deepcopy(self.arr_tail[i + 1].geom)
-                    
-            
-                    self.arr_tail[i].geom.radius = self.radiusTail
-                    self.arr_tail[i].Create(self.surface)
+
+
+                    self.arr_tail[i].paint.Create()
                 
 
 
@@ -86,16 +86,19 @@ class Snake(Object):
     def start_atPoint(self, position):
 
         if not self.spawn:
+            #Компоненты:
+            self.coll = self.AddComponent(CCollider(self, CircleCollider()))
+            self.paint = self.AddComponent(CTexture(self.surface, self, CircleTexture()))
+
             #Устанавливаем радиус головы и хвоста змеи
-            self.form.type.radius = (position.x + position.y) // 36
-            self.radiusTail = int(self.form.type.radius / 2)
+            self.paint.type.radius = (position.x + position.y) // 36
+            self.radiusTail = int(self.paint.type.radius / 2)
 
             self.coll.type.radius = self.radiusTail
 
-            
 
             #Устанавливаем шаг змеи 
-            self.step = Vector(self.geom.radius, self.geom.radius) + Vector(15, 15)
+            self.step = Vector(self.radiusTail, self.radiusTail) + Vector(15, 15)
 
             #Устанавливаем координаты змеи
             self.geom.position = position
@@ -140,7 +143,7 @@ class Snake(Object):
                 self.move_object()
                 self.tail()
 
-                self.Create(self.surface)
+                self.paint.Create()
             else:
                 self.dead = True
 

@@ -1,10 +1,16 @@
+from Scene.Scene import *
 from Games.GSnake.Snake import *
-
+#
 
 xSizeWin = 1240
 ySizeWin = 800
 
 SnakeWin = Window(xSizeWin, ySizeWin)
+#Snake().surface = Window(xSizeWin, ySizeWin).surface
+
+
+#InScene.append(Snake())
+
 Snk = Snake()
 
 
