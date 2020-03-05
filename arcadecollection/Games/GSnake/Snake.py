@@ -9,16 +9,15 @@ from copy import *
 
 class Tail(Object):
 
-    def set_geom(self, head, prev_geom, coll = True):
-        
+    def set(self, head, prev_geom):
+
         #Компоненты:
         self.coll = self.AddComponent(CCollider(self, CircleCollider(head.radiusTail)))
-        self.paint = self.AddComponent(CTexture(head.surface, self, CircleTexture(head.radiusTail)))
+        self.paint = self.AddComponent(CTexture(self, CircleTexture(head.radiusTail)))
 
         #
         self.geom = prev_geom
-        self.coll.collision = coll
-        
+        self.coll.collision = True
 
 
 class Snake(Object):
@@ -30,82 +29,47 @@ class Snake(Object):
     Prev = None
 
     #Состояния змеи
-    start = False #Старт игры
     dead = False #Переменная смерти
-    spawn = False #Появление змеи на карте
+    begin = False #Появление змеи на карте
     defualt_Tquantity = 6
 
     #Количество очков
     score = 0
 
-
-    #Диспетчер змеи
-    def set_snake(self, surface, position):
-        #Определяем экран
-        self.surface = surface
+    #
+    def Start(self):
+        #Компоненты:
+        self.coll = self.AddComponent(CCollider(self, CircleCollider()))
+        self.paint = self.AddComponent(CTexture(self, CircleTexture()))
 
         #Стартуем в позиции:
-        self.start_atPoint(position)
+        self.start_atPoint(Vector(Window.Width // 2,
+                                  Window.Height // 2))
 
         #
         self.coll.collision = True
 
+
+    #Основной цикл:
+    def Update(self):
         #Запускаем движение
         self.move()
-
-    #Цикл, ведущий хвост за головой змеи
-    def tail(self):
-        if self.start: #Начинаем создавать хвост при условном "старте" игры
-            #Двигаем хвост, если длина его массива соответствует необходимой длине хвоста
-            
-            if len(self.arr_tail) < self.length_snake:
-
-                self.arr_tail.append(Tail())
-                self.arr_tail[len(self.arr_tail) - 1].set_geom(self, deepcopy(self.Prev))
-                #
-
-                for i in self.arr_tail:
-                    i.paint.Create()
-            else:
-                for i in range(len(self.arr_tail)):
-
-                    if i == len(self.arr_tail) - 1: #
-                        self.arr_tail[i].geom = deepcopy(self.Prev)
-                    #
-                    else:
-                    #
-                    #
-                        self.arr_tail[i].geom = deepcopy(self.arr_tail[i + 1].geom)
-
-
-                    self.arr_tail[i].paint.Create()
-                
 
 
     #Координаты спавна змеи на старте игры
     def start_atPoint(self, position):
 
-        if not self.spawn:
-            #Компоненты:
-            self.coll = self.AddComponent(CCollider(self, CircleCollider()))
-            self.paint = self.AddComponent(CTexture(self.surface, self, CircleTexture()))
+        #Устанавливаем радиус головы и хвоста змеи
+        self.paint.type.radius = (position.x + position.y) // 36
+        self.radiusTail = int(self.paint.type.radius / 2)
 
-            #Устанавливаем радиус головы и хвоста змеи
-            self.paint.type.radius = (position.x + position.y) // 36
-            self.radiusTail = int(self.paint.type.radius / 2)
+        self.coll.type.radius = self.radiusTail
+        
+        #Устанавливаем шаг змеи 
+        self.step = Vector(self.radiusTail * 2, self.radiusTail * 2) + Vector(1, 1)
 
-            self.coll.type.radius = self.radiusTail
-
-
-            #Устанавливаем шаг змеи 
-            self.step = Vector(self.radiusTail, self.radiusTail) + Vector(15, 15)
-
-            #Устанавливаем координаты змеи
-            self.geom.position = position
-            
-            #Сообщаем о появлении змеи на карте
-            self.spawn = True 
-
+        #Устанавливаем координаты змеи
+        self.geom.position = position
 
     #Движение змеи
     def move(self):
@@ -133,8 +97,7 @@ class Snake(Object):
                 self.length_snake = self.score + self.defualt_Tquantity
 
                 #
-                self.start = True
-                
+                self.begin = True
 
 
             if not self.coll.Collision():
@@ -143,8 +106,26 @@ class Snake(Object):
                 self.move_object()
                 self.tail()
 
-                self.paint.Create()
             else:
                 self.dead = True
 
+
+    #Цикл, ведущий хвост за головой змеи
+    def tail(self):
+        if self.begin: #Начинаем создавать хвост при условном "старте" игры
+            #Двигаем хвост, если длина его массива соответствует необходимой длине хвоста
             
+            if len(self.arr_tail) < self.length_snake:
+                self.arr_tail.append(Tail())
+                self.arr_tail[-1].set(self, deepcopy(self.Prev))
+
+            else:
+                for i in range(len(self.arr_tail)):
+
+                    if i == len(self.arr_tail) - 1: #
+                        self.arr_tail[i].geom = deepcopy(self.Prev)
+                    #
+                    else:
+                    #
+                    #
+                        self.arr_tail[i].geom = deepcopy(self.arr_tail[i + 1].geom)

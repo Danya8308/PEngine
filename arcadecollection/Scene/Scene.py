@@ -1,10 +1,17 @@
+from Scene.Window import *
 #
+
 
 InScene = []
 
 class Scene:
 
-    def ObjectsLoops():
-        
+    start = False
+
+    def Run():
         for obj in InScene:
+            if not obj.start:
+                obj.Start()
+                obj.start = True
+
             obj.Update()

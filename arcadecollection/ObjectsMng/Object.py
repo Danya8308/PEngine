@@ -23,6 +23,8 @@ class Object(OInformation):
         #Массив компонентов объекта
         self.Components = []
 
+        self.surface = None
+
         #
         self.toArray()
 

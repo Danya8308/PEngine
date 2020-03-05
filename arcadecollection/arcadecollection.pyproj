@@ -38,7 +38,7 @@
     <Compile Include="Components\Texture\CTexture.py" />
     <Compile Include="Components\Texture\SquareTexture.py" />
     <Compile Include="Games\GSnake\Snake.py" />
-    <Compile Include="Games\GSnake\SnakeManager.py" />
+    <Compile Include="Games\GSnake\SnakesScene.py" />
     <Compile Include="Inputs\Input.py" />
     <Compile Include="Inputs\SnakeCntrl.py" />
     <Compile Include="Interface\Button.py" />
@@ -50,8 +50,13 @@
     <Compile Include="ObjectsMng\Vector.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Scene\MainMenu.py" />
+    <Compile Include="Scene\Scene.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Scene\Window.py" />
+    <Compile Include="SystemMethods\StartUpdate.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Components\" />
@@ -61,6 +66,7 @@
     <Folder Include="Games\GSnake\" />
     <Folder Include="Inputs\" />
     <Folder Include="Interface\" />
+    <Folder Include="SystemMethods\" />
     <Folder Include="ObjectsMng\" />
     <Folder Include="Scene\" />
   </ItemGroup>

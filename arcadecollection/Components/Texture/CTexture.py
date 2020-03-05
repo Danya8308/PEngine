@@ -3,11 +3,12 @@ from Components.Component import *
 
 class CTexture(Component):
     
-    def __init__(self, surface, obj, Type):
-        self.surface = surface
+    def __init__(self, obj, Type):
         self.object = obj
         self.type = Type
+        #
+        InScene.append(self)
 
     
-    def Create(self):
-        self.type.Draw(self.surface, self.object)
+    def Update(self):
+        self.type.Draw(self.object)

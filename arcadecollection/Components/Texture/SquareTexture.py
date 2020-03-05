@@ -8,8 +8,8 @@ class SquareTexture:
         
 
     #Создаем квадрат
-    def Draw(self, surface, obj, width, height):
-        draw.rect(surface, self.obj.color,
+    def Draw(self, obj, width, height):
+        draw.rect(Window.Surface, self.obj.color,
                   (self.obj.geom.position.x, self.obj.geom.position.y,
                    width, height))
 

@@ -1,7 +1,6 @@
 from ObjectsMng.OInformation import *
 #
-from copy import *
 
 
-class Component:
+class Component(StartUpdate):
     pass

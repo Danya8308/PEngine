@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\arcadecollection",
+    "\\arcadecollection\\Components",
+    "\\arcadecollection\\Components\\Collider",
+    "\\arcadecollection\\Components\\Texture"
+  ],
+  "SelectedNode": "\\arcadecollection\\Components\\Collider\\CircleCollider.py",
+  "PreviewInSolutionExplorer": false
+}

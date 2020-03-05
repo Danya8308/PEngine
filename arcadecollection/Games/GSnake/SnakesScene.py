@@ -1,33 +1,22 @@
-from Scene.Scene import *
 from Games.GSnake.Snake import *
 #
 
-xSizeWin = 1240
-ySizeWin = 800
 
-SnakeWin = Window(xSizeWin, ySizeWin)
-#Snake().surface = Window(xSizeWin, ySizeWin).surface
-
-
-#InScene.append(Snake())
-
-Snk = Snake()
+class SnakeScene:
+    
+    InScene.append(Window(1240, 800))
+    InScene.append(Snake())
 
 
+    #Основной цикл сессии Snake
+    def snakeLoop(self):
+        while not(Window.Stop()):
+            time.delay(100)
+
+            Scene.Run()
+
+            #Обновляем экран
+            display.update()
 
 
-#Основной цикл сессии Snake
-def snakeLoop():
-    while not(SnakeWin.stop): #and not(Snk.dead):
-        time.delay(100)
-
-        SnakeWin.openWin()
-
-        Snk.set_snake(SnakeWin.surface,
-                      Vector(xSizeWin // 2, ySizeWin // 2))
-
-
-        #Обновляем экран
-        display.update()
-
-snakeLoop()
+SnakeScene().snakeLoop()

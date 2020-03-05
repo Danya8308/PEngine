@@ -1,6 +1,9 @@
-from ObjectsMng.Vector import *
+from Scene.Scene import *
+from SystemMethods.StartUpdate import *
+from ObjectsMng.Vector import * 
 #
 from pygame import *
+from copy import *
 
 
 #Массив всех созданных объектов
@@ -16,7 +19,7 @@ class OArrayTag:
 
 
 
-class OInformation:
+class OInformation(StartUpdate):
 
     #Тэг объекта
     tag = 'Object'

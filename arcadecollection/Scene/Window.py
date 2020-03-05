@@ -1,32 +1,43 @@
-
+from SystemMethods.StartUpdate import *
 #
 from pygame import *
 
-class Window:
-    stop = False #Переменная для остановки ОСНОВНОГО цикла
+class Window(StartUpdate):
+
+    #
+    Width = 0
+    Height = 0
+
+    #
+    Surface = display.set_mode((0, 0))
 
     #
     #Конструктор
     def __init__(self, width = 0, height = 0):
-        self.width = width
-        self.height = height
+        Window.Width = width
+        Window.Height = height
     
 
+    #
+    def Update(self):
+        self.openWin()
+
+
     #Проверка на событие QUIT
-    def loopWin(self):
+    def Stop():
         for i in event.get():
             if i.type == QUIT:
-                self.stop = True
+                return True
+            #
+        return False
 
 
     #Метод открытия окна
     def openWin(self):
         init()
-
-        self.size = (self.width, self.height)
-        self.surface = display.set_mode(self.size)
-
-        self.loopWin()
+        #
+        Window.Surface = display.set_mode((Window.Width,
+                                          Window.Height))
 
 
     #Метод, закрывающий окно
